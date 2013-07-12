@@ -13,6 +13,10 @@
 ##' @rdname interleave
 ##' @export
 ##' @examples
+##' interleave(1:4, 5:15)
+##' interleave(matrix(1:4, 2, 2), matrix(5:8, 2, 2))
+##' interleave(matrix(1:4, 2, 2), matrix(5:8, 2, 2), byrow = FALSE)
+##' interleave(head(esoph), tail(esoph))
 interleave <- function (...) {
     UseMethod("interleave")
 }
@@ -39,7 +43,7 @@ interleave.default <- function(...) {
 ##' @export
 ##' @method as.list matrix
 ##' @keywords list
-##' @author David Hajage \email{dhajage@gmail.com}
+##' @author David Hajage \email{dhajage@@gmail.com}
 as.list.matrix <- function(x, byrow = TRUE) {
   margin <- 2
   if (byrow)

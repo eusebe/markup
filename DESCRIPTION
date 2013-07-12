@@ -1,10 +1,16 @@
 Package: markup
 Title: Coerce R objects to several markup languages
-Description: Print R object with asciidoc, markdown (pandoc and github flavour) and restructuredText syntax
+Description: Print R object with asciidoc, markdown (pandoc and github flavour)
+    and restructuredText syntax
 Version: 0.1
 Authors@R: c(
     person("David", "Hajage",
-    email = "dhajage@gmail.com", role = c("aut", "cre"))
-Depends: R (>= 2.13)
+    email = "dhajage@gmail.com", role = c("aut", "cre")))
+Depends:
+    R (>= 2.13)
 License: GPL (>= 2)
 LazyData: true
+Collate:
+    'interleave.r'
+    'markup-package.r'
+    'paste_matrix.r'
