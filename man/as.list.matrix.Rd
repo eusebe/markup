@@ -2,7 +2,7 @@
 \alias{as.list.matrix}
 \title{Transform a matrix to a list}
 \usage{
-  \method{as.list}{matrix} (x, byrow = TRUE)
+  \method{as.list}{matrix} (x, byrow = TRUE, ...)
 }
 \arguments{
   \item{x}{a matrix}
@@ -11,7 +11,7 @@
   each row (\code{byrow = TRUE}) or each column
   (\code{byrow = FALSE}) of the matrix}
 
-  \item{...}{}
+  \item{...}{not used}
 }
 \value{
   a list

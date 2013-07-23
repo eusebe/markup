@@ -3,7 +3,7 @@
 ##' Interleave
 ##'
 ##' These functions interleave the elements of several lists or several vectors or several matrix or several data frames.
-##' @param ... lists, vectors, matrix or data.frames (all the same classes).
+##' @param ... lists, vectors, matrix or data.frames (but all the same classes).
 ##' @param byrow for matrix and data.frames, interleaving will be done by rows (\code{TRUE}) or by columns (\code{FALSE})
 ##' @param pretty.rownames for data.frames, when \code{byrow = TRUE}, rownames of the output will use the name of the objects in \code{...}
 ##' @aliases interleave interleave.default interleave.matrix interleave.data.frame
@@ -22,6 +22,7 @@ interleave <- function (...) {
 }
 
 ##' @method interleave default
+##' @rdname interleave
 ##' @export
 interleave.default <- function(...) {
   args <- list(...)
@@ -38,13 +39,13 @@ interleave.default <- function(...) {
 ##'
 ##' @param x a matrix
 ##' @param byrow each element of the list will correspond to each row (\code{byrow = TRUE}) or each column (\code{byrow = FALSE}) of the matrix
-##' @param ...
+##' @param ... not used
 ##' @return a list
 ##' @export
 ##' @method as.list matrix
 ##' @keywords list
 ##' @author David Hajage \email{dhajage@@gmail.com}
-as.list.matrix <- function(x, byrow = TRUE) {
+as.list.matrix <- function(x, byrow = TRUE, ...) {
   margin <- 2
   if (byrow)
     margin <- 1
@@ -53,6 +54,7 @@ as.list.matrix <- function(x, byrow = TRUE) {
 }
 
 ##' @method interleave matrix
+##' @rdname interleave
 ##' @export
 interleave.matrix <- function(..., byrow = TRUE) {
   args <- list(...)
@@ -69,6 +71,7 @@ interleave.matrix <- function(..., byrow = TRUE) {
 }
 
 ##' @method interleave data.frame
+##' @rdname interleave
 ##' @export
 interleave.data.frame <- function(..., byrow = TRUE, pretty.rownames = TRUE) {
   args <- list(...)

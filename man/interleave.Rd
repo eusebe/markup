@@ -6,10 +6,17 @@
 \title{Interleave}
 \usage{
   interleave(...)
+
+  \method{interleave}{default} (...)
+
+  \method{interleave}{matrix} (..., byrow = TRUE)
+
+  \method{interleave}{data.frame} (..., byrow = TRUE,
+    pretty.rownames = TRUE)
 }
 \arguments{
-  \item{...}{lists, vectors, matrix or data.frames (all the
-  same classes).}
+  \item{...}{lists, vectors, matrix or data.frames (but all
+  the same classes).}
 
   \item{byrow}{for matrix and data.frames, interleaving
   will be done by rows (\code{TRUE}) or by columns
