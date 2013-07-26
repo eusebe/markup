@@ -2,16 +2,17 @@
 ##'
 ##' @param p p values
 ##' @param digits number of digits
+##' @param decimal.mark see \code{?formatC}
 ##' @param drop0trailing see \code{?formatC}
 ##' @return A character vector (formated p values)
 ##' @export
 ##' @author David Hajage
-plim <- function(p, digits = 2, drop0trailing = FALSE) {
+plim <- function(p, digits = 2, decimal.mark = ".", drop0trailing = FALSE) {
   pround <- round(p, digits)
   lim <- 10^(-digits)
   ptxt <- vector("character", length(p))
   ptxt[pround < lim] <- paste("<", "0.", paste(rep("0", digits-1), collapse = ""), "1", sep = "")
-  ptxt[pround >= lim] <- formatC(pround[pround >= lim], format = "f", digits = digits, drop0trailing = drop0trailing)
+  ptxt[pround >= lim] <- formatC(pround[pround >= lim], format = "f", digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing)
   return(ptxt)
 }
 
@@ -22,6 +23,7 @@ plim <- function(p, digits = 2, drop0trailing = FALSE) {
 ##' @param x a vector, a matrix, or a data.frame
 ##' @param format see \code{?formatC}. Same options, plus one: \code{"p"} (see \code{?plim})
 ##' @param digits see \code{?formatC}
+##' @param decimal.mark see \code{?formatC}
 ##' @param drop0trailing see \code{?formatC}
 ##' @param include.rownames if \code{TRUE}, results will include row names
 ##' @param include.colnames if \code{TRUE}, results will include column names
@@ -42,13 +44,13 @@ tocharac <- function (x, ...) {
 ##' @method tocharac default
 ##' @rdname tocharac
 ##' @export
-tocharac.default <- function(x, format = "f", digits = 2, drop0trailing = FALSE, ...) {
+tocharac.default <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, ...) {
 
     if (is.numeric(x)) {
         if (format != "p") {
-            char <- formatC(x, digits = digits, format = format, drop0trailing = drop0trailing)
+            char <- formatC(x, digits = digits, decimal.mark = decimal.mark, format = format, drop0trailing = drop0trailing)
         } else {
-            char <- plim(x, digits = digits, drop0trailing = drop0trailing)
+            char <- plim(x, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing)
         }
     } else {
         char <- as.character(x)
@@ -59,7 +61,7 @@ tocharac.default <- function(x, format = "f", digits = 2, drop0trailing = FALSE,
 ##' @method tocharac matrix
 ##' @rdname tocharac
 ##' @export
-tocharac.matrix <- function(x, format = "f", digits = 2, drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
+tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
     format <- expand(format, nrow(x), ncol(x), drop = FALSE)
     digits <- expand(digits, nrow(x), ncol(x), drop = FALSE)
     drop0trailing <- expand(drop0trailing, nrow(x), ncol(x), drop = FALSE)
@@ -67,7 +69,7 @@ tocharac.matrix <- function(x, format = "f", digits = 2, drop0trailing = FALSE, 
     res <- matrix(nrow = nrow(x), ncol = ncol(x))
     for (i in 1:nrow(x)) {
         for (j in 1:ncol(x)) {
-            res[i, j] <- tocharac(x[i, j], format = format[i, j], digits = digits[i, j], drop0trailing = drop0trailing[i, j])
+            res[i, j] <- tocharac(x[i, j], format = format[i, j], digits = digits[i, j], decimal.mark = decimal.mark, drop0trailing = drop0trailing[i, j])
         }
     }
 
@@ -93,8 +95,8 @@ tocharac.matrix <- function(x, format = "f", digits = 2, drop0trailing = FALSE, 
 ##' @method tocharac data.frame
 ##' @rdname tocharac
 ##' @export
-tocharac.data.frame <- function(x, format = "f", digits = 2, drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
-    res <- tocharac.matrix(x, format = format, digits = digits, drop0trailing = drop0trailing, include.rownames = include.rownames, include.colnames = include.colnames)
+tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
+    res <- tocharac.matrix(x, format = format, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing, include.rownames = include.rownames, include.colnames = include.colnames)
     res
 }
 

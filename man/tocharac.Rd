@@ -8,14 +8,15 @@
   tocharac(x, ...)
 
   \method{tocharac}{default} (x, format = "f", digits = 2,
-    drop0trailing = FALSE, ...)
+    decimal.mark = ".", drop0trailing = FALSE, ...)
 
   \method{tocharac}{matrix} (x, format = "f", digits = 2,
-    drop0trailing = FALSE, include.rownames = FALSE,
-    include.colnames = FALSE, ...)
+    decimal.mark = ".", drop0trailing = FALSE,
+    include.rownames = FALSE, include.colnames = FALSE,
+    ...)
 
   \method{tocharac}{data.frame} (x, format = "f",
-    digits = 2, drop0trailing = FALSE,
+    digits = 2, decimal.mark = ".", drop0trailing = FALSE,
     include.rownames = FALSE, include.colnames = FALSE,
     ...)
 }
@@ -26,6 +27,8 @@
   one: \code{"p"} (see \code{?plim})}
 
   \item{digits}{see \code{?formatC}}
+
+  \item{decimal.mark}{see \code{?formatC}}
 
   \item{drop0trailing}{see \code{?formatC}}
 
