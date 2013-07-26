@@ -49,9 +49,11 @@ expand <- function(x, nrow = NULL, ncol = NULL, what = NULL, drop = TRUE) {
         xx[1:minnrow, 1:minncol] <- x[1:minnrow, 1:minncol]
         xx[is.na(xx)] <- what
     } else {
-        xx <- apply(t(apply(x, 1, rep, length = ncol)), 2, rep, length = nrow)
-        if (nrow(x) > 1 & ncol(x) == 1 & ncol == 1)
-            xx <- xx[1, , drop = FALSE]
+        if (nrow(x) > 1 & ncol(x) == 1 & ncol == 1) {
+            xx <- apply(x, 2, rep, length = nrow)
+        } else {
+            xx <- apply(t(apply(x, 1, rep, length = ncol)), 2, rep, length = nrow)
+        }
     }
     if (!drop) {
         dim(xx) <- c(nrow, ncol)
