@@ -113,7 +113,7 @@ tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".",
 ##' @param add the minimum number of \code{" "} character to add. Default is \code{2}
 ##' @param ... not used
 ##' @aliases justify justify.default justify.matrix justify.data.frame
-##' @return A character vector or matrix. All columns will have the same length of strings.
+##' @return A character vector or matrix. All columns will have the same string length.
 ##' @author David Hajage \email{dhajage@@gmail.com}
 ##' @keywords manip
 ##' @rdname justify
