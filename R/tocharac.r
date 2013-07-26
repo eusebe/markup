@@ -25,6 +25,7 @@ plim <- function(p, digits = 2, decimal.mark = ".", drop0trailing = FALSE) {
 ##' @param digits see \code{?formatC}
 ##' @param decimal.mark see \code{?formatC}
 ##' @param drop0trailing see \code{?formatC}
+##' @param na.print character string specifying how \code{NA} should be formatted specially
 ##' @param include.rownames if \code{TRUE}, results will include row names
 ##' @param include.colnames if \code{TRUE}, results will include column names
 ##' @param ... not used
@@ -33,6 +34,7 @@ plim <- function(p, digits = 2, decimal.mark = ".", drop0trailing = FALSE) {
 ##' @author David Hajage \email{dhajage@@gmail.com}
 ##' @keywords manip
 ##' @rdname tocharac
+##' @import stringr
 ##' @export
 ##' @examples
 ##' tocharac(1:4)
@@ -44,7 +46,7 @@ tocharac <- function (x, ...) {
 ##' @method tocharac default
 ##' @rdname tocharac
 ##' @export
-tocharac.default <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, ...) {
+tocharac.default <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", ...) {
 
     if (is.numeric(x)) {
         if (format != "p") {
@@ -55,13 +57,15 @@ tocharac.default <- function(x, format = "f", digits = 2, decimal.mark = ".", dr
     } else {
         char <- as.character(x)
     }
-    char
+    char[is.na(x)] <- na.print
+
+    str_trim(char)
 }
 
 ##' @method tocharac matrix
 ##' @rdname tocharac
 ##' @export
-tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
+tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, ...) {
     format <- expand(format, nrow(x), ncol(x), drop = FALSE)
     digits <- expand(digits, nrow(x), ncol(x), drop = FALSE)
     drop0trailing <- expand(drop0trailing, nrow(x), ncol(x), drop = FALSE)
@@ -69,7 +73,7 @@ tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", dro
     res <- matrix(nrow = nrow(x), ncol = ncol(x))
     for (i in 1:nrow(x)) {
         for (j in 1:ncol(x)) {
-            res[i, j] <- tocharac(x[i, j], format = format[i, j], digits = digits[i, j], decimal.mark = decimal.mark, drop0trailing = drop0trailing[i, j])
+            res[i, j] <- tocharac(x[i, j], format = format[i, j], digits = digits[i, j], decimal.mark = decimal.mark, drop0trailing = drop0trailing[i, j], na.print = na.print)
         }
     }
 
@@ -95,8 +99,8 @@ tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", dro
 ##' @method tocharac data.frame
 ##' @rdname tocharac
 ##' @export
-tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, include.rownames = FALSE, include.colnames = FALSE, ...) {
-    res <- tocharac.matrix(x, format = format, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing, include.rownames = include.rownames, include.colnames = include.colnames)
+tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, ...) {
+    res <- tocharac.matrix(x, format = format, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing, na.print = na.print, include.rownames = include.rownames, include.colnames = include.colnames)
     res
 }
 
