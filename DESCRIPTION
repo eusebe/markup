@@ -15,5 +15,5 @@ Collate:
     'interleave.r'
     'markup-package.r'
     'paste_matrix.r'
-    'format.r'
     'style.r'
+    'tocharac.r'
