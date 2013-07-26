@@ -17,3 +17,4 @@ Collate:
     'paste_matrix.r'
     'style.r'
     'tocharac.r'
+    'markup.r'
