@@ -28,7 +28,7 @@
 }
 \value{
   A character vector or matrix. All columns will have the
-  same length of strings.
+  same string length.
 }
 \description{
   Justify strings
