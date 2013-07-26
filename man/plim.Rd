@@ -21,6 +21,6 @@
   format p values
 }
 \author{
-  David Hajage
+  David Hajage \email{dhajage@gmail.com}
 }
 

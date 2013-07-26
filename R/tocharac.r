@@ -6,7 +6,7 @@
 ##' @param drop0trailing see \code{?formatC}
 ##' @return A character vector (formated p values)
 ##' @export
-##' @author David Hajage
+##' @author David Hajage \email{dhajage@@gmail.com}
 plim <- function(p, digits = 2, decimal.mark = ".", drop0trailing = FALSE) {
   pround <- round(p, digits)
   lim <- 10^(-digits)
