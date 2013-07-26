@@ -7,10 +7,13 @@ Authors@R: c(
     person("David", "Hajage",
     email = "dhajage@gmail.com", role = c("aut", "cre")))
 Depends:
-    R (>= 2.13)
+    R (>= 2.13),
+    stringr
 License: GPL (>= 2)
 LazyData: true
 Collate:
     'interleave.r'
     'markup-package.r'
     'paste_matrix.r'
+    'format.r'
+    'style.r'
