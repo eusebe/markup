@@ -28,6 +28,12 @@ plim <- function(p, digits = 2, decimal.mark = ".", drop0trailing = FALSE) {
 ##' @param na.print character string specifying how \code{NA} should be formatted specially
 ##' @param include.rownames if \code{TRUE}, results will include row names
 ##' @param include.colnames if \code{TRUE}, results will include column names
+##' @param rownames character vector (replicated or truncated as
+##'   necessary) indicating rownames of the corresponding rows. If
+##'   \code{NULL} (default) rownames are not modified
+##' @param colnames character vector (replicated or truncated as
+##'   necessary) indicating colnames of the corresponding columns. If
+##'   \code{NULL} (default) colnames are not modified
 ##' @param ... not used
 ##' @aliases tocharac tocharac.default tocharac.matrix tocharac.data.frame
 ##' @return A character vector or matrix
@@ -65,7 +71,7 @@ tocharac.default <- function(x, format = "f", digits = 2, decimal.mark = ".", dr
 ##' @method tocharac matrix
 ##' @rdname tocharac
 ##' @export
-tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, ...) {
+tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, rownames = NULL, colnames = NULL, ...) {
     format <- expand(format, nrow(x), ncol(x), drop = FALSE)
     digits <- expand(digits, nrow(x), ncol(x), drop = FALSE)
     drop0trailing <- expand(drop0trailing, nrow(x), ncol(x), drop = FALSE)
@@ -77,10 +83,23 @@ tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", dro
         }
     }
 
-    rn <- rownames(x)
-    if (is.null(rn)) rn <- rep("", nrow(x))
-    cn <- colnames(x)
-    if (is.null(cn)) cn <- rep("", ncol(x))
+    if (!is.null(rownames)) {
+        rn <- rep(rownames, length = nrow(x))
+    } else {
+        rn <- rownames(x)
+    }
+    if (is.null(rn)) {
+        rn <- rep("", nrow(x))
+    }
+    if (!is.null(colnames)) {
+        cn <- rep(colnames, length = ncol(x))
+    } else {
+        cn <- colnames(x)
+    }
+    if (is.null(cn)) {
+        cn <- rep("", ncol(x))
+    }
+
     if (include.rownames & !include.colnames) {
         res <- cbind(rn, res)
     }
@@ -99,8 +118,8 @@ tocharac.matrix <- function(x, format = "f", digits = 2, decimal.mark = ".", dro
 ##' @method tocharac data.frame
 ##' @rdname tocharac
 ##' @export
-tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, ...) {
-    res <- tocharac.matrix(x, format = format, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing, na.print = na.print, include.rownames = include.rownames, include.colnames = include.colnames)
+tocharac.data.frame <- function(x, format = "f", digits = 2, decimal.mark = ".", drop0trailing = FALSE, na.print = "", include.rownames = FALSE, include.colnames = FALSE, rownames = NULL, colnames = NULL, ...) {
+    res <- tocharac.matrix(x, format = format, digits = digits, decimal.mark = decimal.mark, drop0trailing = drop0trailing, na.print = na.print, include.rownames = include.rownames, include.colnames = include.colnames, rownames = rownames, colnames = colnames)
     res
 }
 
